@@ -1,0 +1,18 @@
+package com.muggedbits.chronicler.chronicler.posts;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+
+public interface PostRepository extends JpaRepository<Post, Long> {
+
+    List<Post> findByTitleContaining(String title);
+
+    List<Post> findAllByOrderByMoodAsc();
+
+    List<Post> findAllByOrderByMoodDesc();
+
+    List<Post> findAllByOrderByDateAsc();
+
+    List<Post> findAllByOrderByDateDesc();
+}
