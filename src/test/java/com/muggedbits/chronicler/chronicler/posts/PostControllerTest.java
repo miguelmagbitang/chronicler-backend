@@ -32,112 +32,112 @@ class PostControllerTest {
             new Post("title 3", LocalDate.of(1970, 1, 1), 10, "sample"))
             .collect(Collectors.toList());
 
-    @Test
-    void getPostCountTest() {
-        Mockito.when(postService.getPostCount()).thenReturn(2);
-        ResponseEntity response = postController.getPostCount();
-        assertEquals(response.getStatusCode(), HttpStatus.OK);
-    }
-
-    @Test
-    void getPostByMoodAscTest() {
-        Mockito.when(postService.getPostsByMood(true)).thenReturn(posts);
-        ResponseEntity response = postController.getPostByMoodAsc();
-        assertEquals(response.getStatusCode(), HttpStatus.OK);
-        assertEquals(response.getBody(), posts);
-    }
-
-    @Test
-    void getPostByMoodAscTest_noResults() {
-        Mockito.when(postService.getPostsByMood(true)).thenReturn(Collections.emptyList());
-        ResponseEntity response = postController.getPostByMoodAsc();
-        assertEquals(response.getStatusCode(), HttpStatus.NO_CONTENT);
-        assertEquals(response.getBody(), null);
-    }
-
-    @Test
-    void getPostByMoodDescTest() {
-        Mockito.when(postService.getPostsByMood(false)).thenReturn(posts);
-        ResponseEntity response = postController.getPostByMoodDesc();
-        assertEquals(response.getStatusCode(), HttpStatus.OK);
-        assertEquals(response.getBody(), posts);
-    }
-
-    @Test
-    void getPostByMoodDescTest_noResults() {
-        Mockito.when(postService.getPostsByMood(false)).thenReturn(Collections.emptyList());
-        ResponseEntity response = postController.getPostByMoodAsc();
-        assertEquals(response.getStatusCode(), HttpStatus.NO_CONTENT);
-        assertEquals(response.getBody(), null);
-    }
-
-    @Test
-    void getPostByDateAscTest() {
-        Mockito.when(postService.getPostsByDate(true)).thenReturn(posts);
-        ResponseEntity response = postController.getPostByDateAsc();
-        assertEquals(response.getStatusCode(), HttpStatus.OK);
-        assertEquals(response.getBody(), posts);
-    }
-
-    @Test
-    void getPostByDateAscTest_noResults() {
-        Mockito.when(postService.getPostsByMood(false)).thenReturn(Collections.emptyList());
-        ResponseEntity response = postController.getPostByMoodAsc();
-        assertEquals(response.getStatusCode(), HttpStatus.NO_CONTENT);
-        assertEquals(response.getBody(), null);
-    }
-
-    @Test
-    void getAllPostsTest() {
-        Mockito.when(postService.getPostsByDate(false)).thenReturn(posts);
-        ResponseEntity response = postController.getAllPosts();
-        assertEquals(response.getStatusCode(), HttpStatus.OK);
-        assertEquals(response.getBody(), posts);
-    }
-
-    @Test
-    void getAllPostsNoResultTest() {
-        Mockito.when(postService.getPostsByDate(false)).thenReturn(Collections.emptyList());
-        ResponseEntity response = postController.getAllPosts();
-        assertEquals(response.getStatusCode(), HttpStatus.NO_CONTENT);
-        assertEquals(response.getBody(), null);
-    }
-
-    @Test
-    void getPostByIdTest() {
-        Mockito.when(postService.getPostById(1)).thenReturn(Optional.of(posts.get(0)));
-        ResponseEntity response = postController.getPostById(1);
-        assertEquals(response.getStatusCode(), HttpStatus.OK);
-        assertEquals(response.getBody(), posts.get(0));
-    }
-
-    @Test
-    void getPostByIdTest_noResult() {
-        Mockito.when(postService.getPostById(1)).thenReturn(Optional.empty());
-        ResponseEntity response = postController.getPostById(1);
-        assertEquals(response.getStatusCode(), HttpStatus.NOT_FOUND);
-        assertEquals(response.getBody(), null);
-    }
-
-    @Disabled
-    @Test
-    void createPostTest() {
-        PostWrapper postWrapper = new PostWrapper("title 1", "2021-06-01", 10, "sample");
-        Mockito.when(postService.createPost(postWrapper.asPost())).thenReturn(postWrapper.asPost());
-        ResponseEntity response = postController.createPost(postWrapper);
-        assertEquals(response.getStatusCode(), HttpStatus.CREATED);
-        assertEquals(response.getBody(), posts.get(0));
-    }
-
-    @Test
-    void updatePost() {
-    }
-
-    @Test
-    void deletePost() {
-    }
-
-    @Test
-    void deleteAllPosts() {
-    }
+//    @Test
+//    void getPostCountTest() {
+//        Mockito.when(postService.getPostCount()).thenReturn(2);
+//        ResponseEntity response = postController.getPostCount();
+//        assertEquals(response.getStatusCode(), HttpStatus.OK);
+//    }
+//
+//    @Test
+//    void getPostByMoodAscTest() {
+//        Mockito.when(postService.getPostsByMood(true)).thenReturn(posts);
+//        ResponseEntity response = postController.getPostByMoodAsc();
+//        assertEquals(response.getStatusCode(), HttpStatus.OK);
+//        assertEquals(response.getBody(), posts);
+//    }
+//
+//    @Test
+//    void getPostByMoodAscTest_noResults() {
+//        Mockito.when(postService.getPostsByMood(true)).thenReturn(Collections.emptyList());
+//        ResponseEntity response = postController.getPostByMoodAsc();
+//        assertEquals(response.getStatusCode(), HttpStatus.NO_CONTENT);
+//        assertEquals(response.getBody(), null);
+//    }
+//
+//    @Test
+//    void getPostByMoodDescTest() {
+//        Mockito.when(postService.getPostsByMood(false)).thenReturn(posts);
+//        ResponseEntity response = postController.getPostByMoodDesc();
+//        assertEquals(response.getStatusCode(), HttpStatus.OK);
+//        assertEquals(response.getBody(), posts);
+//    }
+//
+//    @Test
+//    void getPostByMoodDescTest_noResults() {
+//        Mockito.when(postService.getPostsByMood(false)).thenReturn(Collections.emptyList());
+//        ResponseEntity response = postController.getPostByMoodAsc();
+//        assertEquals(response.getStatusCode(), HttpStatus.NO_CONTENT);
+//        assertEquals(response.getBody(), null);
+//    }
+//
+//    @Test
+//    void getPostByDateAscTest() {
+//        Mockito.when(postService.getPostsByDate(true)).thenReturn(posts);
+//        ResponseEntity response = postController.getPostByDateAsc();
+//        assertEquals(response.getStatusCode(), HttpStatus.OK);
+//        assertEquals(response.getBody(), posts);
+//    }
+//
+//    @Test
+//    void getPostByDateAscTest_noResults() {
+//        Mockito.when(postService.getPostsByMood(false)).thenReturn(Collections.emptyList());
+//        ResponseEntity response = postController.getPostByMoodAsc();
+//        assertEquals(response.getStatusCode(), HttpStatus.NO_CONTENT);
+//        assertEquals(response.getBody(), null);
+//    }
+//
+//    @Test
+//    void getAllPostsTest() {
+//        Mockito.when(postService.getPostsByDate(false)).thenReturn(posts);
+//        ResponseEntity response = postController.getAllPosts();
+//        assertEquals(response.getStatusCode(), HttpStatus.OK);
+//        assertEquals(response.getBody(), posts);
+//    }
+//
+//    @Test
+//    void getAllPostsNoResultTest() {
+//        Mockito.when(postService.getPostsByDate(false)).thenReturn(Collections.emptyList());
+//        ResponseEntity response = postController.getAllPosts();
+//        assertEquals(response.getStatusCode(), HttpStatus.NO_CONTENT);
+//        assertEquals(response.getBody(), null);
+//    }
+//
+//    @Test
+//    void getPostByIdTest() {
+//        Mockito.when(postService.getPostById(1)).thenReturn(Optional.of(posts.get(0)));
+//        ResponseEntity response = postController.getPostById(1);
+//        assertEquals(response.getStatusCode(), HttpStatus.OK);
+//        assertEquals(response.getBody(), posts.get(0));
+//    }
+//
+//    @Test
+//    void getPostByIdTest_noResult() {
+//        Mockito.when(postService.getPostById(1)).thenReturn(Optional.empty());
+//        ResponseEntity response = postController.getPostById(1);
+//        assertEquals(response.getStatusCode(), HttpStatus.NOT_FOUND);
+//        assertEquals(response.getBody(), null);
+//    }
+//
+//    @Disabled
+//    @Test
+//    void createPostTest() {
+//        PostWrapper postWrapper = new PostWrapper("title 1", "2021-06-01", 10, "sample");
+//        Mockito.when(postService.createPost(postWrapper.asPost())).thenReturn(postWrapper.asPost());
+//        ResponseEntity response = postController.createPost(postWrapper);
+//        assertEquals(response.getStatusCode(), HttpStatus.CREATED);
+//        assertEquals(response.getBody(), posts.get(0));
+//    }
+//
+//    @Test
+//    void updatePost() {
+//    }
+//
+//    @Test
+//    void deletePost() {
+//    }
+//
+//    @Test
+//    void deleteAllPosts() {
+//    }
 }

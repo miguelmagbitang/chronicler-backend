@@ -5,9 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -23,60 +21,53 @@ public class PostController {
     }
 
     @GetMapping("/mood-asc")
-    public ResponseEntity<List<Post>> getPostByMoodAsc() {
-        List<Post> posts = new ArrayList<>();
-        posts = postService.getPostsByMood(true);
-        if (posts.isEmpty()) {
+    public ResponseEntity<Map<String, Object>> getPostByMoodAsc(@RequestParam(defaultValue = "0") int page,
+                                                       @RequestParam(defaultValue = "3") int size) {
+        Map<String, Object> response = postService.getPostsByMood(true, page, size);
+        if (response.get("posts").equals(Collections.emptyList())) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
-            return new ResponseEntity<>(posts, HttpStatus.OK);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         }
     }
 
     @GetMapping("/mood-desc")
-    public ResponseEntity<List<Post>> getPostByMoodDesc() {
-        List<Post> posts = new ArrayList<>();
-        posts = postService.getPostsByMood(false);
-        if (posts.isEmpty()) {
+    public ResponseEntity<Map<String, Object>> getPostByMoodDesc(@RequestParam(defaultValue = "0") int page,
+                                                                 @RequestParam(defaultValue = "3") int size) {
+        Map<String, Object> response = postService.getPostsByMood(false, page, size);
+        if (response.get("posts").equals(Collections.emptyList())) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
-            return new ResponseEntity<>(posts, HttpStatus.OK);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         }
     }
 
     @GetMapping("/date-asc")
-    public ResponseEntity<List<Post>> getPostByDateAsc() {
-        List<Post> posts = new ArrayList<>();
-        posts = postService.getPostsByDate(true);
-        if (posts.isEmpty()) {
+    public ResponseEntity<Map<String, Object>> getPostByDateAsc(@RequestParam(defaultValue = "0") int page,
+                                                      @RequestParam(defaultValue = "3") int size) {
+        Map<String, Object> response = postService.getPostsByDate(true, page, size);
+        if (response.get("posts").equals(Collections.emptyList())) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
-            return new ResponseEntity<>(posts, HttpStatus.OK);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         }
     }
 
     @GetMapping("/date-desc")
-    public ResponseEntity<List<Post>> getPostByDateDesc() {
-        List<Post> posts = new ArrayList<>();
-        posts = postService.getPostsByDate(false);
-        System.out.println(posts);
-        if (posts.isEmpty()) {
+    public ResponseEntity<Map<String, Object>> getPostByDateDesc(@RequestParam(defaultValue = "0") int page,
+                                                        @RequestParam(defaultValue = "3") int size) {
+        Map<String, Object> response = postService.getPostsByDate(false, page, size);
+        if (response.get("posts").equals(Collections.emptyList())) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
-            return new ResponseEntity<>(posts, HttpStatus.OK);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         }
     }
 
     @GetMapping()
-    public ResponseEntity<List<Post>> getAllPosts() {
-        return getPostByDateDesc();
-//        List<Post> posts = new ArrayList<>();
-//        posts = postService.getAllPosts();
-//        if (posts.isEmpty()) {
-//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//        } else {
-//            return new ResponseEntity<>(posts, HttpStatus.OK);
-//        }
+    public ResponseEntity<Map<String, Object>> getAllPosts(@RequestParam(defaultValue = "0") int page,
+                                                  @RequestParam(defaultValue = "3") int size) {
+        return getPostByDateDesc(page, size);
     }
 
     @GetMapping("/{id}")

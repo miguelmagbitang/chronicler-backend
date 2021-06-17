@@ -1,14 +1,15 @@
 package com.muggedbits.chronicler.chronicler.posts;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class PostService {
@@ -20,32 +21,30 @@ public class PostService {
         return (int) postRepository.count();
     }
 
-    public List<Post> getPostsByTitle(String title) {
-        List<Post> posts = new ArrayList<>();
-        postRepository.findByTitleContaining(title).forEach(posts::add);
-        return posts;
+    public Map<String, Object> getPostsByTitle(String title, int page, int size) {
+        Pageable paging = PageRequest.of(page, size);
+        Page<Post> pagePosts = postRepository.findByTitleContaining(title, paging);
+        Map<String, Object> response = constructMap(pagePosts);
+        return response;
     }
 
-    public List<Post> getPostsByDate(boolean ascending) {
-        List<Post> posts = new ArrayList<>();
-        if (ascending) {
-            postRepository.findAllByOrderByDateAsc().forEach(posts::add);
-        } else {
-            postRepository.findAllByOrderByDateDesc().forEach(posts::add);
-        }
-        return posts;
+    public Map<String, Object> getPostsByDate(boolean ascending, int page, int size) {
+        Pageable paging = PageRequest.of(page, size);
+        Page<Post> pagePosts = ascending ? postRepository.findAllByOrderByDateAsc(paging)
+                : postRepository.findAllByOrderByDateDesc(paging);
+        Map<String, Object> response = constructMap(pagePosts);
+        return response;
     }
 
-    public List<Post> getPostsByMood(boolean ascending) {
-        List<Post> posts = new ArrayList<>();
-        if (ascending) {
-            postRepository.findAllByOrderByMoodAsc().forEach(posts::add);
-        } else {
-            postRepository.findAllByOrderByMoodDesc().forEach(posts::add);
-        }
-        return posts;
+    public Map<String, Object> getPostsByMood(boolean ascending, int page, int size) {
+        Pageable paging = PageRequest.of(page, size);
+        Page<Post> pagePosts = ascending ? postRepository.findAllByOrderByMoodAsc(paging)
+                : postRepository.findAllByOrderByMoodDesc(paging);
+        Map<String, Object> response = constructMap(pagePosts);
+        return response;
     }
 
+    @Deprecated
     public List<Post> getAllPosts() {
         List<Post> posts = new ArrayList<>();
         postRepository.findAll().forEach(posts::add);
@@ -82,5 +81,17 @@ public class PostService {
 
     public void deleteAllPosts() {
         postRepository.deleteAll();
+    }
+
+    /**
+     * Constructs a Map containing the following key value pairs: 1. posts, 2. currentPage, 3. totalItems, 4. totalPages
+     * @param pagePost
+     * @return Map containing the response
+     */
+    private Map<String, Object> constructMap(Page<Post> pagePost) {
+        return Map.of("posts", pagePost.getContent(),
+                "currentPage", pagePost.getNumber(),
+                "totalItems", pagePost.getTotalElements(),
+                "totalPages", pagePost.getTotalPages());
     }
 }

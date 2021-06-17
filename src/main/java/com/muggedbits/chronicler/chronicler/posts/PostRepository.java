@@ -1,18 +1,20 @@
 package com.muggedbits.chronicler.chronicler.posts;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
 
-    List<Post> findByTitleContaining(String title);
+    Page<Post> findByTitleContaining(String title, Pageable pageable);
 
-    List<Post> findAllByOrderByMoodAsc();
+    Page<Post> findAllByOrderByMoodAsc(Pageable pageable);
 
-    List<Post> findAllByOrderByMoodDesc();
+    Page<Post> findAllByOrderByMoodDesc(Pageable pageable);
 
-    List<Post> findAllByOrderByDateAsc();
+    Page<Post> findAllByOrderByDateAsc(Pageable pageable);
 
-    List<Post> findAllByOrderByDateDesc();
+    Page<Post> findAllByOrderByDateDesc(Pageable pageable);
 }
